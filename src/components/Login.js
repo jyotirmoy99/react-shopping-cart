@@ -6,7 +6,7 @@ function Login(props) {
 
   const HandleLogin = () => {
     if (user.userName === "jyotirmoy" && user.password === "password") {
-      props.history.push("/products");
+      props.history.push("/home");
     } else {
       alert("Wrong username or password!");
     }

@@ -1,14 +1,32 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import ProductDetails from "./ProductDetails";
 import Header from "./Header";
 
-const Products = (props) => {
+const Products = () => {
+  const [search, setSearch] = useState("");
+  const [products, setProducts] = useState([]);
+  const [filteredSearch, setFilteredSearch] = useState([]);
+
   useEffect(() => {
     //calling API function
     getProducts();
   }, []);
 
-  const [products, setProducts] = useState([]);
+  //search filter
+  useEffect(() => {
+    setFilteredSearch(
+      products.filter((p) => {
+        return p.title.toLowerCase().includes(search.toLowerCase());
+      })
+    );
+  }, [products, search]);
+
+  //HandleChange
+
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
 
   //API function
   const getProducts = async () => {
@@ -22,41 +40,35 @@ const Products = (props) => {
     <div>
       <Header />
       <h2 className="text-center">All products</h2>
+
       <div className="container pt-5">
+        {/* SEARCH START */}
+        <form class="form-inline ml-auto mr-auto p-5">
+          <input
+            class="form-control mr-auto ml-auto"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            value={search}
+            onChange={handleChange}
+          />
+        </form>
+        {/* SEARCH END */}
         <div className="row">
           <div className="col-md-12">
             <div className="card-deck">
+              {/* MAP START  */}
               {products.length > 0 ? (
-                products.map((value, index) => {
+                filteredSearch.map((value, index) => {
                   return (
                     // card map
-                    <div className="col-md-4">
-                      <div className="card" style={{ width: 300 }}>
-                        <img
-                          src={value.image}
-                          className="card-img-top"
-                          alt="productImage"
-                        />
-                        <div className="card-body">
-                          <h5 className="card-title">{value.title}</h5>
-                          <small>{value.category}</small>
-                          <p>${value.price}</p>
-                          <div>
-                            <button className="btn btn-primary">
-                              View Product
-                            </button>
-                            <button className="btn btn-warning">
-                              Add to Card
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <ProductDetails key={index} {...value} />
                   );
                 })
               ) : (
-                <h2>No produt found</h2>
+                <h2>No product found</h2>
               )}
+              {/* MAP END */}
             </div>
           </div>
         </div>
