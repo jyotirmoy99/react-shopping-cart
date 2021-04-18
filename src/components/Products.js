@@ -23,9 +23,9 @@ const Products = (props) => {
   };
 
   // //VIEW CART
-  // const viewCart = (value) => {
-  //   props.history.push("/viewCart");
-  // };
+  const viewCart = (value) => {
+    props.history.push("/viewCart");
+  };
 
   //API function
   const getProducts = async () => {
@@ -47,7 +47,10 @@ const Products = (props) => {
   return (
     <div>
       <h2 className="text-center pt-5">
-        All products <span style={{ color: "green" }}>{element}</span>
+        All products{" "}
+        <span style={{ color: "green" }} onClick={viewCart}>
+          {element}
+        </span>
         <span
           style={{
             fontSize: 30,
@@ -57,9 +60,9 @@ const Products = (props) => {
         </span>
       </h2>
 
-      <div className="container pt-5">
+      <div className="container pt-3">
         {/* SEARCH START */}
-        <form class="form-inline ml-auto mr-auto p-5">
+        <form class="form-inline ml-auto mr-auto p-3">
           <input
             class="form-control mr-auto ml-auto"
             type="search"
@@ -97,7 +100,6 @@ const Products = (props) => {
                             >
                               Add to Card
                             </button>
-                            <button className="btn btn-success">Buy Now</button>
                           </div>
                         </div>
                       </div>
