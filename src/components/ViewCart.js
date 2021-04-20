@@ -4,14 +4,19 @@ import { NavLink } from "react-router-dom";
 
 function ViewCart(props) {
   const [viewProduct, setViewProduct] = useState([]);
+  const [getPriceValue, setPriceValue] = useState([]);
 
   useEffect(() => {
     getProduct();
+    getPriceItem();
   }, [viewProduct]);
 
   useEffect(() => {
     setViewProduct(JSON.parse(localStorage.getItem("cart")));
   });
+
+  // TOTAL PRICE
+  const getPriceItem = () => {};
 
   //ADD QTY
   const addQty = (item, index) => {
@@ -41,10 +46,6 @@ function ViewCart(props) {
     localStorage.setItem("cart", JSON.stringify(newViewProduct));
     console.log(newViewProduct);
   };
-
-  //ADD QUANTITY
-
-  //REMOVE QUANTITY
 
   return (
     <div className="row">
