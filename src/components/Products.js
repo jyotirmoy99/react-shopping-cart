@@ -10,14 +10,20 @@ const Products = (props) => {
   const [products, setProducts] = useState([]); //products fetching from API to display on the screen
   const [cartProducts, setCartProducts] = useState([]); //to store on the localStorge
   const [filteredItems, setFilteredItems] = useState([]); //filtering the products when we search something on the screen
+  const [productID, setProductID] = useState();
 
   //calling API function inside useEffect
   useEffect(() => {
     getProducts();
-  }, [products]); //if we dont give here products as dependency then we have to refresh every time we add product to cart to display on the screen
+    setProductID(cartProducts.map((item) => item.id));
+  }, [cartProducts, products]); //if we dont give here products as dependency then we have to refresh every time we add product to cart to display on the screen
 
   //ADD TO CART
   const addCart = (item) => {
+    if (productID.includes(item.id)) {
+      alert("Product already added");
+      return;
+    }
     item["qty"] = 1;
     cartProducts.push(item);
     localStorage.setItem("cart", JSON.stringify(cartProducts));
@@ -99,7 +105,9 @@ const Products = (props) => {
                               className="btn btn-warning"
                               onClick={() => addCart(value)}
                             >
-                              Add to Card
+                              {productID.includes(value.id)
+                                ? "Added"
+                                : "Add to cart"}
                             </button>
                           </div>
                         </div>

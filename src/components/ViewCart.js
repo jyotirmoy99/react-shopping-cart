@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 
 function ViewCart(props) {
   const [viewProduct, setViewProduct] = useState([]);
-  const [getPriceValue, setPriceValue] = useState([]);
 
   useEffect(() => {
     getProduct();
@@ -128,9 +127,7 @@ function ViewCart(props) {
               <h2 className="ml-auto mr-auto">Empty Cart</h2>
             )}
             <tr>
-              <td>
-                <b>Total Price: {}</b>
-              </td>
+              <td>{/* <b>Total Price: {}</b> */}</td>
             </tr>
           </tbody>
         </table>
